@@ -1,0 +1,16 @@
+{
+  "name": "codingchallenges-wc",
+  "version": "1.0.0",
+  "main": "./bin/index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "Manav Gadhiya",
+  "license": "ISC",
+  "description": "wc command-line utility built using javascript",
+  "bin": {
+    "ccwc": "./bin/index.js"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  }
+}

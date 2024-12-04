@@ -1,3 +1,4 @@
-- [ ] Add stdin (Standard Input) support for the command
-- [ ] Refactor & Optimize Code
+- [x] Add stdin (Standard Input) support for the command
+- [x] Refactor & Optimize Code
 - [x] README.md
+- [ ] Fix: `-c` & `-m` showing same output

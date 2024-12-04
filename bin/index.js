@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import fs from "node:fs/promises";
+import { handleOptions } from "../utils/functions.js";
 
 const program = new Command();
 
@@ -21,72 +21,24 @@ program
   .option("-w, --words", "print the word counts")
   .option("-m, --chars", "print the character counts")
   .action(async (file, options) => {
-    if (options && Object.keys(options).length > 0) {
-      const bytesOption = options.bytes;
-      const linesOption = options.lines;
-      const wordsOption = options.words;
-      const charsOption = options.chars;
+    if (file) {
+      handleOptions(options, file, false);
+    } else {
+      if (!process.stdin.isTTY) {
+        let data = "";
 
-      if (file) {
-        const fileBuffer = await fs.readFile(file);
-        const fileString = fileBuffer.toString();
-
-        if (bytesOption) {
-          console.log(`${fileBuffer.length} ${file}`);
-        }
-
-        if (linesOption) {
-          const fileHandle = await fs.open(file);
-          let lines = 0;
-
-          for await (const _line of fileHandle.readLines()) {
-            lines++;
-          }
-
-          console.log(`${lines} ${file}`);
-        }
-
-        if (wordsOption) {
-          const fileWordsArrayLength = fileString
-            .split(/\s+/)
-            .filter((word) => word != "").length;
-          console.log(`${fileWordsArrayLength} ${file}`);
-        }
-
-        if (charsOption) {
-          const fileCharsArrayLength = [...fileString].filter(
-            (char) => char != "\n" || char != "\r"
-          ).length;
-          console.log(`${fileCharsArrayLength} ${file}`);
-        }
+        process.stdin.setEncoding("utf8");
+        process.stdin.on("data", (chunk) => {
+          data += chunk;
+        });
+        process.stdin.on("end", () => {
+          handleOptions(options, data, true);
+        });
 
         return;
-      } else {
-        console.error("file: argument not found");
       }
+      console.error("file: argument not found");
     }
-
-    const fileBuffer = await fs.readFile(file);
-    const fileString = fileBuffer.toString();
-
-    const fileHandle = await fs.open(file);
-    let lines = 0;
-
-    for await (const _line of fileHandle.readLines()) {
-      lines++;
-    }
-
-    const fileWordsArrayLength = fileString
-      .split(/\s+/)
-      .filter((word) => word != "").length;
-
-    const fileCharsArrayLength = [...fileString].filter(
-      (char) => char != "\n" || char != "\r"
-    ).length;
-
-    console.log(
-      `${lines} ${fileWordsArrayLength} ${fileCharsArrayLength} ${file}`
-    );
   });
 
 program.parse();

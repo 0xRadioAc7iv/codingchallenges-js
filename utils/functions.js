@@ -60,7 +60,7 @@ export async function handleOptions(options, file, isStandardInput) {
     }
 
     if (charsOption) {
-      const chars = getCharCount(fileBuffer);
+      const chars = getCharCount(fileString);
       output += `${chars} `;
     }
 

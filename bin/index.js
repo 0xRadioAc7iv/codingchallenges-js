@@ -32,7 +32,7 @@ program
           data += chunk;
         });
         process.stdin.on("end", () => {
-          handleOptions(options, data, true);
+          handleOptions(options, Buffer.from(data), true);
         });
 
         return;

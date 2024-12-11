@@ -3,6 +3,7 @@
 import { Command } from "commander";
 import { handleOptions } from "../utils/functions.js";
 
+// Defines a command-line
 const program = new Command();
 
 program

@@ -1,0 +1,16 @@
+{
+  "name": "json-parser",
+  "version": "0.0.1",
+  "description": "A Node.js command-line tool to parse and stringify JSON.",
+  "main": "./bin/index.js",
+  "type": "module",
+  "bin": {
+    "jp": "./bin/index.js"
+  },
+  "keywords": [],
+  "author": "Manav Gadhiya",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^12.1.0"
+  }
+}
